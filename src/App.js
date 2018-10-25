@@ -9,8 +9,10 @@ import {
   TextField,
   Toolbar,
 } from 'react-md';
-// import { PouchDB } from 'react-pouchdb/browser';
-// import Input from './Input';
+
+import { PouchDB, Find } from "react-pouchdb";
+//import { PouchDB, Find } from 'react-pouchdb/browser';
+import Input from './Input';
 
 class App extends Component {
 
@@ -87,9 +89,11 @@ class App extends Component {
               actions={<Button flat onClick={this.hide}>Save</Button>}
             />
             <section className="md-toolbar-relative">
+              <PouchDB name="todoapp">
+                <Input />
+              </PouchDB>
               <TextField id="event-email" placeholder="Email" block paddedBlock />
               <Divider />
-
               <TextField id="event-name" placeholder="Event name" block paddedBlock />
               <Divider />
               <TextField id="event-desc" placeholder="Description" block paddedBlock rows={4} onChange={evt => this.updateInputValue(evt)} />
