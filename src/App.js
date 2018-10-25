@@ -11,6 +11,8 @@ import {
 } from 'react-md';
 
 import { PouchDB, Find } from "react-pouchdb";
+import Item from "./Item";
+
 //import { PouchDB, Find } from 'react-pouchdb/browser';
 import Input from './Input';
 
@@ -45,6 +47,10 @@ class App extends Component {
 
   render() {
     const { visible, pageX, pageY } = this.state;
+    const filterByCompletedField = {
+      active: { $ne: true },
+      completed: true
+    };
 
     return (
     <NavigationDrawer
@@ -71,6 +77,21 @@ class App extends Component {
           <Button raised onClick={this.show} aria-controls="simple-full-page-dialog">
             Open the Dialog
           </Button>
+          <PouchDB name="todoapp">
+            <Find
+              selector={{
+                timestamp: { $gte: null },
+              }}
+              sort={['timestamp']}
+              render={({ docs }) => (
+                <ul>
+                  {docs.map(doc => (
+                    <Item key={doc._id} doc={doc} />
+                  ))}
+                </ul>
+              )}
+            />
+          </PouchDB>;
           <DialogContainer
             id="simple-full-page-dialog"
             visible={visible}
