@@ -11,13 +11,19 @@ import {
 } from 'react-md';
 
 import { PouchDB, Find } from "react-pouchdb";
+import { Chart, Axis, Series, Tooltip, Cursor, Bar } from "react-charts";
 import Item from "./Item";
 
 //import { PouchDB, Find } from 'react-pouchdb/browser';
 import Input from './Input';
 
-class App extends Component {
+const chartData = [
+  [[1, 10], [2, 10], [3, 10]],
+  [[1, 10], [2, 10], [3, 10]],
+  [[1, 10], [2, 10], [3, 10]]
+];
 
+class App extends Component {
   state = { visible: false, pageX: null, pageY: null };
 
   show = (e) => {
@@ -91,7 +97,17 @@ class App extends Component {
                 </ul>
               )}
             />
-          </PouchDB>;
+          </PouchDB>
+          <div className="chart-container">
+          <Chart data={chartData}>
+            <Axis primary type="ordinal" />
+            <Axis type="linear" min={0} max={0} stacked />
+            <Series type={Bar} />
+            <Cursor primary />
+            <Cursor />
+            <Tooltip />
+          </Chart>
+          </div>
           <DialogContainer
             id="simple-full-page-dialog"
             visible={visible}
